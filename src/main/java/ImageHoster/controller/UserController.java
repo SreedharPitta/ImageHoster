@@ -41,10 +41,10 @@ public class UserController {
     //This method calls the business logic and after the user record is persisted in the database, directs to login page
     @RequestMapping(value = "users/registration", method = RequestMethod.POST)
     public String registerUser(User user, Model model) {
-        if(checkPasswordValidity(user.getPassword())){
+        if (checkPasswordValidity(user.getPassword())) {
             userService.registerUser(user);
             return "users/login";
-        }else{
+        } else {
             System.out.println("Entered Here for User Login");
             String error = "Password must contain atleast 1 alphabet, 1 number & 1 special character";
             User user1 = new User();
@@ -54,25 +54,26 @@ public class UserController {
             model.addAttribute("passwordTypeError", error);
             return "users/registration";
         }
-        
+
     }
+
     //This is to check the validity of Password
     private boolean checkPasswordValidity(String userPassword) {
         boolean validPassword = false;
         int alphabetCount = 0;
         int numberCount = 0;
         int specialCharacterCount = 0;
-        for(int i=0; i < userPassword.length(); i++){
-         char c = userPassword.charAt(i);
-         if((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')){
-             alphabetCount++;
-         }else if(c >='0' && c <='9'){
-            numberCount++;
-         }else{
-             specialCharacterCount++;
-         }
+        for (int i = 0; i < userPassword.length(); i++) {
+            char c = userPassword.charAt(i);
+            if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) {
+                alphabetCount++;
+            } else if (c >= '0' && c <= '9') {
+                numberCount++;
+            } else {
+                specialCharacterCount++;
+            }
         }
-        if(alphabetCount !=0 && numberCount !=0 && numberCount !=0){
+        if (alphabetCount != 0 && numberCount != 0 && numberCount != 0) {
             validPassword = true;
         }
         return validPassword;

@@ -96,12 +96,12 @@ public class ImageController {
     public String editImage(@RequestParam("imageId") Integer imageId, Model model, HttpSession session) {
         User user = (User) session.getAttribute("loggeduser");
         Image image = imageService.getImage(imageId);
-        if(user.getId().equals(image.getUser().getId())){
+        if (user.getId().equals(image.getUser().getId())) {
             String tags = convertTagsToString(image.getTags());
             model.addAttribute("image", image);
             model.addAttribute("tags", tags);
             return "images/edit";
-        }else{
+        } else {
             String error = "Only the owner of the image can edit the image";
             model.addAttribute("editError", error);
             model.addAttribute("image", image);
@@ -142,7 +142,7 @@ public class ImageController {
         updatedImage.setDate(new Date());
 
         imageService.updateImage(updatedImage);
-        return "redirect:/images/"+updatedImage.getId()+"/" + updatedImage.getTitle();
+        return "redirect:/images/" + updatedImage.getId() + "/" + updatedImage.getTitle();
     }
 
 
@@ -150,13 +150,13 @@ public class ImageController {
     //The method calls the deleteImage() method in the business logic passing the id of the image to be deleted
     //Looks for a controller method with request mapping of type '/images'
     @RequestMapping(value = "/deleteImage", method = RequestMethod.DELETE)
-    public String deleteImageSubmit(@RequestParam(name = "imageId") Integer imageId,Model model, HttpSession session) {
+    public String deleteImageSubmit(@RequestParam(name = "imageId") Integer imageId, Model model, HttpSession session) {
         User user = (User) session.getAttribute("loggeduser");
         Image image = imageService.getImage(imageId);
-        if(user.getId().equals(image.getUser().getId())){
+        if (user.getId().equals(image.getUser().getId())) {
             imageService.deleteImage(imageId);
             return "redirect:/images";
-        }else{
+        } else {
             String error = "Only the owner of the image can delete the image";
             model.addAttribute("deleteError", error);
             model.addAttribute("image", image);
