@@ -43,8 +43,9 @@ public class UserController {
     public String registerUser(User user, Model model) {
         if(checkPasswordValidity(user.getPassword())){
             userService.registerUser(user);
-            return "redirect:/users/login";    
+            return "users/login";
         }else{
+            System.out.println("Entered Here for User Login");
             String error = "Password must contain atleast 1 alphabet, 1 number & 1 special character";
             User user1 = new User();
             UserProfile profile1 = new UserProfile();
